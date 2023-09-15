@@ -4,7 +4,7 @@ public class SinglyList<E>{
     private int size;
     private final  Node<E> head;
 
-    //带头结点的单链表
+    //带头结点的单链表，即头结点不存储数据
     private static class Node<E>{
         E element;
         Node<E> next;
@@ -40,16 +40,17 @@ public class SinglyList<E>{
         return true;
     }
     public E remove(int index){
-        if(index < 0 || index > size - 1)  //同样的，先判断位置是否合法
+        if(index < 0 || index > size - 1)  //同样的，先判断位置是否合法  [0,size-1]
             throw new IndexOutOfBoundsException("删除位置非法，合法的删除位置为：0 ~ "+(size - 1));
         Node<E> front=head;
-        while(index>1){
+        while(index>0){
             front=front.next;
             index--;
         }
         Node<E> current=front.next;
         E element=current.element;
         front.next=current.next;
+        this.size--;
         return element;
     }
     public E get(int index){
@@ -88,14 +89,14 @@ public class SinglyList<E>{
         SinglyList<Integer> singlyList=new SinglyList<>();
         for (int i = 0; i < 7; i++)
             singlyList.insert(i*100,i);
-        singlyList.set(888,0);
-        singlyList.set(999,1);
+        singlyList.set(-100,0);
         System.out.print("遍历如下：");
         for (int i = 0; i < singlyList.size(); i++)
             System.out.print(singlyList.get(i)+"，");
         System.out.println();
-        System.out.println("删除元素："+singlyList.remove(2));
+        System.out.println("删除元素索引为2的元素："+singlyList.remove(2));
         System.out.println("是否为空："+singlyList.isEmpty());
+        System.out.println("长度："+singlyList.size());
     }
 
 

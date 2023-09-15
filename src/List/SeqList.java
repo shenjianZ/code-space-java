@@ -5,12 +5,12 @@ import java.util.Arrays;
 public class SeqList<E> {
     int capacity;
     int size;
-    private Object[] array;
+    private E[] array;
 
     public SeqList(){
         capacity=10;
         size=0;
-        array = new Object[capacity];
+        array = (E[]) new Object[capacity];
     }
 
     public int size(){
@@ -54,7 +54,7 @@ public void set(E element,int index) {
             int newCapacity = capacity + (capacity >> 1);
             Object[] newArray = new Object[newCapacity];
             System.arraycopy(array, 0, newArray, 0, size);
-            this.array = newArray;
+            this.array = (E[])newArray;
             this.capacity=newCapacity;
         }
         for (int i = size; i > index; i--) {
