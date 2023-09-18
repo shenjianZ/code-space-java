@@ -1,7 +1,6 @@
 package Queue;
 
 public class SeqQueue<E> {
-
     int capacity;
     private E [] array;
     int head; //队首
@@ -13,20 +12,31 @@ public class SeqQueue<E> {
     }
     Boolean offer(E element){
         if((this.tail+1)%this.capacity==this.head){
-            int newCapacity=capacity+capacity>>1;
+            int newCapacity=capacity+ (capacity >> 1);
             E [] newArray=(E[])new Object[newCapacity];
-            this.capacity=newCapacity;
-            for (int i = 0; i < capacity-1; i++) {
-                newArray[i]=this.array[i];
+            if(tail==this.capacity-1) {
+                for (int i = 0; i < this.capacity; i++)
+                    newArray[i] = this.array[i];
+            }
+            else {
+                int j=1;
+                for (int i = head+1; i < this.capacity; i++,j++) {
+                    newArray[j]=this.array[j];
+                }
+                for (int i = 0; i <= tail; i++) {
+                    newArray[j]=this.array[i];
+                }
             }
             this.array=newArray;
+            this.capacity=newCapacity;
+            this.array[(tail+1)%this.capacity]=element;
         }
         this.array[tail]=element;
         this.tail=(this.tail+1)%this.capacity;
         return true;
     }
     E peek(){
-        return this.array[head];
+        return this.array[(this.head+1)%this.capacity];
     }
     E poll(){
         this.head=(this.head+1)%this.capacity;
@@ -35,8 +45,8 @@ public class SeqQueue<E> {
     void _print(){
         int i=this.head;
         do{
-            if(i!=tail)
-                System.out.print(this.array[i]+",");
+            if(i!=tail-1)
+                System.out.print(this.array[i]+" << ");
             else
                 System.out.print(this.array[i]);
             i=(i+1)%this.capacity;
@@ -45,15 +55,11 @@ public class SeqQueue<E> {
 
     public static void main(String[] args) {
         SeqQueue queue=new SeqQueue();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 15; i++) {
             queue.offer(i*100);
         }
         queue.peek();
+        queue.poll();
         queue._print();
     }
-
-
-
-
-
 }

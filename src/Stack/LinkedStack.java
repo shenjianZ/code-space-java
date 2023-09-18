@@ -1,13 +1,7 @@
 package Stack;
 
-import List.SinglyList;
-
-import javax.swing.text.Element;
-
 public class LinkedStack <E>{
-    E element;
-    Node next;
-    Node head;
+    Node<E> top;
 
     private static class Node<E>{
         E element;
@@ -19,50 +13,48 @@ public class LinkedStack <E>{
     }
 
     public LinkedStack(){
-        next = new Node<>(null);
-        head = new Node<>(null);
-        element = null;
+        top = null;
     }
-    Boolean push(E element){
-        if(this.head.next==null){
-            Node newNode = new Node<>(element);
-            this.head.next=newNode;
-            return true;
-        }
-        Node newNode = new Node<>(element);
-        newNode.next=this.head.next;
-        this.head.next=newNode;
+    boolean push(E element){
+        Node<E> newNode = new Node<>(element);
+        newNode.next=this.top;
+        this.top=newNode;
         return true;
     }
     E peek(){
-        if(this.head.next==null) return null;
-        Node<E> current=this.head.next;
-        E element=(E)current.element;
+        if(this.top==null)
+            // 栈为空，可以抛出异常或返回特定值
+            throw new IllegalStateException("Stack is empty");
+        E element=this.top.element;
         return element;
     }
     E pop(){
-        if(this.head.next==null) return null;
-        Node<E> current=this.head.next;
-        E element=(E)current.element;
-        this.head=this.head.next;
+        if(this.top.next==null)
+            // 栈为空，可以抛出异常或返回特定值
+            throw new IllegalStateException("Stack is empty");
+        E element=this.top.element;
+        this.top=this.top.next;
         return element;
     }
     void _print(){
-        Node<E> current = this.head.next;
-        while(current.next != null ){
-            System.out.print(current.element+", ");
-            current=current.next;
+        Node<E> current = this.top;
+        while (current != null) {
+            if(current.next==null) {
+                System.out.print(current.element);
+                return;
+            }
+            System.out.print(current.element+" -> ");
+            current = current.next;
         }
-        System.out.print(current.element);
     }
 
     public static void main(String[] args) {
         LinkedStack stack = new LinkedStack();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 3; i++) {
             stack.push(i * 100);
         }
-        stack.pop();
-        stack.peek();
+//        stack.pop();
+//        stack.peek();
         stack._print();
     }
 
