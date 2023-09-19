@@ -10,13 +10,43 @@ public class SeqQueue<E> {
         this.array =(E[]) new Object[capacity];
         this.head=this.tail=0;
     }
+
+    public static void main(String[] args) {
+        SeqQueue<Integer> queue = new SeqQueue<>();
+        for (int i = 0; i < 15; i++) {
+            queue.offer(i * 100);
+        }
+        queue.peek();
+        queue.poll();
+        queue._print();
+    }
+
+    E peek() {
+        return this.array[(this.head + 1) % this.capacity];
+    }
+
+    E poll() {
+        this.head = (this.head + 1) % this.capacity;
+        return this.array[head - 1];
+    }
+
+    void _print() {
+        int i = this.head;
+        do {
+            if (i != tail - 1)
+                System.out.print(this.array[i] + " << ");
+            else
+                System.out.print(this.array[i]);
+            i = (i + 1) % this.capacity;
+        } while (i != this.tail);
+    }
+
     Boolean offer(E element){
         if((this.tail+1)%this.capacity==this.head){
             int newCapacity=capacity+ (capacity >> 1);
             E [] newArray=(E[])new Object[newCapacity];
             if(tail==this.capacity-1) {
-                for (int i = 0; i < this.capacity; i++)
-                    newArray[i] = this.array[i];
+                if (this.capacity >= 0) System.arraycopy(this.array, 0, newArray, 0, this.capacity);
             }
             else {
                 int j=1;
@@ -34,32 +64,5 @@ public class SeqQueue<E> {
         this.array[tail]=element;
         this.tail=(this.tail+1)%this.capacity;
         return true;
-    }
-    E peek(){
-        return this.array[(this.head+1)%this.capacity];
-    }
-    E poll(){
-        this.head=(this.head+1)%this.capacity;
-        return this.array[head-1];
-    }
-    void _print(){
-        int i=this.head;
-        do{
-            if(i!=tail-1)
-                System.out.print(this.array[i]+" << ");
-            else
-                System.out.print(this.array[i]);
-            i=(i+1)%this.capacity;
-        }while (i!=this.tail);
-    }
-
-    public static void main(String[] args) {
-        SeqQueue queue=new SeqQueue();
-        for (int i = 0; i < 15; i++) {
-            queue.offer(i*100);
-        }
-        queue.peek();
-        queue.poll();
-        queue._print();
     }
 }

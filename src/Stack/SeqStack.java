@@ -1,6 +1,5 @@
 package Stack;
 
-import List.SeqList;
 
 public class SeqStack<E> {
     int capacity;
@@ -12,12 +11,22 @@ public class SeqStack<E> {
         top=-1;
         array = (E[]) new Object[capacity];
     }
-    Boolean push (E element){
+
+    public static void main(String[] args) {
+        SeqStack<Integer> stack = new SeqStack<>();
+        for (int i = 0; i < 15; i++) {
+            stack.push(i * 10);
+        }
+        stack.peek();
+        stack.pop();
+        stack._print();
+    }
+
+    public boolean push(E element) {
         if(this.top==this.capacity-1){
             int capacity = this.capacity + (this.capacity >> 1);
             E[] newArray = (E[])new Object[capacity];
-            for (int i = 0; i < this.capacity; i++)
-                newArray[i]=this.array[i];
+            if (this.capacity >= 0) System.arraycopy(this.array, 0, newArray, 0, this.capacity);
             this.array=newArray;
             this.capacity=capacity;
         }
@@ -30,14 +39,14 @@ public class SeqStack<E> {
         if(this.top < 0)
             // 栈为空，可以抛出异常或返回特定值
             throw new IllegalStateException("Stack is empty");
-        return (E)this.array[this.top];
+        return this.array[this.top];
     }
 
-    E pop(){
+    public E pop() {
         if(this.top < 0)
             // 栈为空，可以抛出异常或返回特定值
             throw new IllegalStateException("Stack is empty");
-        return (E)this.array[this.top--];
+        return this.array[this.top--];
     }
 
     void _print(){
@@ -50,13 +59,7 @@ public class SeqStack<E> {
         }
     }
 
-    public static void main(String[] args) {
-        SeqStack stack = new SeqStack();
-        for (int i = 0; i < 15; i++) {
-            stack.push(i*10);
-        }
-        stack.peek();
-        stack.pop();
-        stack._print();
+    public boolean isEmpty() {
+        return this.top == 0;
     }
 }

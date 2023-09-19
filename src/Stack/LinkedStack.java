@@ -21,12 +21,15 @@ public class LinkedStack <E>{
         this.top=newNode;
         return true;
     }
-    E peek(){
-        if(this.top==null)
-            // 栈为空，可以抛出异常或返回特定值
-            throw new IllegalStateException("Stack is empty");
-        E element=this.top.element;
-        return element;
+
+    public static void main(String[] args) {
+        LinkedStack<Integer> stack = new LinkedStack<>();
+        for (int i = 0; i < 3; i++) {
+            stack.push(i * 100);
+        }
+        stack.pop();
+        stack.peek();
+        stack._print();
     }
     E pop(){
         if(this.top.next==null)
@@ -48,14 +51,11 @@ public class LinkedStack <E>{
         }
     }
 
-    public static void main(String[] args) {
-        LinkedStack stack = new LinkedStack();
-        for (int i = 0; i < 3; i++) {
-            stack.push(i * 100);
-        }
-//        stack.pop();
-//        stack.peek();
-        stack._print();
+    E peek() {
+        if (this.top == null)
+            // 栈为空，可以抛出异常或返回特定值
+            throw new IllegalStateException("Stack is empty");
+        return this.top.element;
     }
 
 }
