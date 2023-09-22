@@ -35,7 +35,7 @@ public class SeqStack<E> {
         return true;
     }
 
-    E peek(){
+    public E peek() {
         if(this.top < 0)
             // 栈为空，可以抛出异常或返回特定值
             throw new IllegalStateException("Stack is empty");
@@ -60,6 +60,6 @@ public class SeqStack<E> {
     }
 
     public boolean isEmpty() {
-        return this.top == 0;
+        return this.top == -1;
     }
 }
