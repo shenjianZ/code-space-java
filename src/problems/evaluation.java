@@ -3,6 +3,11 @@ package problems;
 import Stack.SeqStack;
 
 
+/*
+ * problem：表达式求值
+ * author：shenjianZ
+ * data：2023-09-21
+ */
 public class evaluation {
     public static int evaluateExpression(String expr) {
         SeqStack<Integer> values = new SeqStack<>();
