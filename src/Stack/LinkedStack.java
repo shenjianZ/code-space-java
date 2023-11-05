@@ -13,7 +13,7 @@ public class LinkedStack <E>{
     }
 
     public LinkedStack(){
-        top = null;
+        this.top = null;
     }
     boolean push(E element){
         Node<E> newNode = new Node<>(element);

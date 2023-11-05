@@ -34,7 +34,7 @@ public class evaluation {
                 while (!operators.isEmpty() && operators.peek() != '(') {
                     values.push(applyOperator(operators.pop(), values.pop(), values.pop()));
                 }
-                //将 ) 弹出运算符栈
+                //将 ( 弹出运算符栈
                 operators.pop();
             } else if (isOperator(c)) {
                 // 如果是运算符，弹出优先级大于或等于当前运算符的运算符，那么就取出数值栈的数字逐个计算

@@ -71,7 +71,7 @@ public void set(E element,int index) {
 
     @SuppressWarnings("unchecked")
     public E remove(int index){
-        if (index < 0 || index > size)
+        if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException("index="+index);
         E element= (E) array[index];
         for (int i = index; i<size; i++) {
@@ -82,13 +82,47 @@ public void set(E element,int index) {
         return element ;
     }
 
-    public int search(E element){
+    public int search(E element) {
+        for (int i = 0; i < size; i++) {
+            if (array[i].equals(element)) {
+                return i;
+            }
+        }
         return -1;
     }
 
-    public boolean equals(Object obj){
+
+    @Override
+    public boolean equals(Object obj) {
+        // 如果是相同的引用，直接返回true
+        if (this == obj) {
+            return true;
+        }
+
+        // 如果传入的对象为空或者不是同一个类，返回false
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        // 将传入的对象转换为SeqList类型
+        SeqList<?> otherList = (SeqList<?>) obj;
+
+        // 如果大小不相等，返回false
+        if (size != otherList.size) {
+            return false;
+        }
+
+        // 逐个比较数组中的元素
+        for (int i = 0; i < size; i++) {
+            if (!array[i].equals(otherList.array[i])) {
+                return false;
+            }
+        }
+
+        // 如果所有元素都相等，返回true
         return true;
     }
+
 
     public static void main(String[] args) {
         SeqList<Integer> seqList=new SeqList<>();

@@ -11,8 +11,10 @@ import Stack.SeqStack;
 public class matching {
 
     public static boolean isMatching(SeqStack<Character> stack, String expr) {
+        //遍历 expr的所有字符
         for (char c : expr.toCharArray()) {
             if (c == '(' || c == '{' || c == '[')
+                // 入栈
                 stack.push(c);
             else if (c == ')' || c == '}' || c == ']') {
                 if (stack.isEmpty())

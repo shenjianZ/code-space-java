@@ -25,6 +25,8 @@ public class SinglyList<E>{
         return this.size==0;
     }
     public boolean insert(E element,int index){
+        if (element == null)
+            throw new NullPointerException("element == null");
         if(index<0 || index > size)
             throw new IndexOutOfBoundsException("插入位置非法，合法的插入位置为：0 ~ "+size);
         Node<E> front=head;
@@ -32,10 +34,10 @@ public class SinglyList<E>{
             front=front.next;
             index--;
         }
-        Node<E> node=new Node<>(element);
+        Node<E> newNode = new Node<>(element);
         Node<E> current=front.next;
-        front.next=node;
-        node.next=current;
+        front.next = newNode;
+        newNode.next = current;
         this.size++;
         return true;
     }
@@ -77,13 +79,50 @@ public class SinglyList<E>{
         Node<E> current=front.next;
         current.element=element;
     }
-    public int search(E element){
+
+    public int search(E element) {
+        if (element == null)
+            throw new NullPointerException("element==null");
+        Node<E> current = head.next;
+        int index = 0;
+        while (current != null) {
+            if (current.element.equals(element)) {
+                return index;
+            }
+            current = current.next;
+            index++;
+        }
         return -1;
     }
 
-    public boolean equals(Object obj){
+
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        SinglyList<?> otherList = (SinglyList<?>) obj;
+        if (size != otherList.size) {
+            return false;
+        }
+
+        Node<E> current = head.next;
+        Node<?> otherCurrent = otherList.head.next;
+
+        while (current != null) {
+            if (!current.element.equals(otherCurrent.element)) {
+                return false;
+            }
+            current = current.next;
+            otherCurrent = otherCurrent.next;
+        }
+
         return true;
     }
+
 
     public static void main(String[] args) {
         SinglyList<Integer> singlyList=new SinglyList<>();
@@ -98,10 +137,4 @@ public class SinglyList<E>{
         System.out.println("是否为空："+singlyList.isEmpty());
         System.out.println("长度："+singlyList.size());
     }
-
-
-
-
-
-
 }

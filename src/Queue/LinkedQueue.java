@@ -2,7 +2,7 @@ package Queue;
 
 public class LinkedQueue <E>{
 
-    //头结点不存储数据
+    //队首不存储数据
     Node<E> head; //队首
     Node<E> tail; //队尾
 
@@ -30,14 +30,7 @@ public class LinkedQueue <E>{
         queue._print();
     }
 
-    Boolean offer(E element){
-        if(this.head.next==null) {
-            Node<E> newNode=new Node<>(element);
-            this.tail.element=element;
-            this.head.next=newNode;
-            this.tail=newNode;
-            return true;
-        }
+    boolean offer(E element) {
         Node<E> front=this.head;
         while(front.next!=null) {
             front=front.next;

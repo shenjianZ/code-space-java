@@ -60,6 +60,7 @@ public class SeqQueue<E> {
             this.array=newArray;
             this.capacity=newCapacity;
             this.array[(tail+1)%this.capacity]=element;
+            this.head = 0; // 重置 head
         }
         this.array[tail]=element;
         this.tail=(this.tail+1)%this.capacity;
