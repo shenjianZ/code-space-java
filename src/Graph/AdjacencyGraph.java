@@ -1,5 +1,8 @@
 package Graph;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class AdjacencyGraph<E> {
 
     int MaxVertex;
@@ -24,6 +27,13 @@ public class AdjacencyGraph<E> {
         graph.addEdge(3, 0);   //D -> A
         graph.addEdge(2, 0);   //C -> A
         graph.printGraph();
+        System.out.println("dfs：");
+        int[] arr1 = new int[graph.vertexCount];
+        graph.dfs(0, 5, arr1);
+        System.out.println("\nbfs:");
+        Queue<Integer> queue = new LinkedList<>();
+        int[] arr2 = new int[graph.vertexCount];
+        graph.bfs(0, 4, arr2, queue);
     }
 
     public void addVertex(E element) {
@@ -68,6 +78,50 @@ public class AdjacencyGraph<E> {
                 node = node.next;
             }
             System.out.println();
+        }
+    }
+
+    /*    public void dfs(){
+            for (int i = 0; i < vertexCount; i++) {
+                Node<E> node = vertex[i].next;
+                while (node != null) {
+                    System.out.print(node.nextVertex + " ");
+                    node = node.next;
+                }
+                System.out.println();
+            }
+        }*/
+    public void dfs(int startVertex, int targetVertex, int[] visited) {
+        visited[startVertex] = 1;
+        System.out.print(vertex[startVertex].element + " -> "); // 打印当前顶点值
+        Node<E> node = vertex[startVertex].next; // 遍历当前顶点所有的分支
+        while (node != null) {
+            if (visited[node.nextVertex] == 0 && node.nextVertex != targetVertex)
+                // 如果尚未访问过这个顶点，那么继续深度优先搜索
+                dfs(node.nextVertex, targetVertex, visited);
+            else if (visited[node.nextVertex] == 1 && node.nextVertex == targetVertex) {
+                System.out.println("Target found!");
+                return;
+            }
+            node = node.next;
+        }
+    }
+
+    public void bfs(int startVertex, int targetVertex, int[] visited, Queue<Integer> queue) {
+        queue.add(startVertex);  // 把起始位置顶点丢进去
+        visited[startVertex] = 1; // 起始位置设置为已走过
+        while (!queue.isEmpty()) {
+            int next = queue.poll();
+            System.out.print(vertex[next].element + " -> "); // 从队列中取出下一个顶点，打印
+            Node<E> node = this.vertex[next].next; // 遍历当前顶点所有的分支
+            while (node != null) {
+                if (visited[node.nextVertex] == 0) {
+                    // 如果没有走过，那么就直接入队
+                    queue.add(node.nextVertex);
+                    visited[node.nextVertex] = 1;
+                }
+                node = node.next;
+            }
         }
     }
 
