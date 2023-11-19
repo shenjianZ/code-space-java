@@ -7,9 +7,9 @@ public class Matrix {
 
     // 构造方法，添加对rows和columns的判断
     public Matrix(int rows, int columns) {
-        if (rows < 0 || columns < 0) {
-            throw new IllegalArgumentException("Rows and columns must be greater than or equal to 0.");
-        }
+        if (rows <= 0 || columns <= 0)
+            throw new IllegalArgumentException("Rows and columns must be greater than  0.\n" +
+                    "rows:" + rows + " columns:" + columns);
 
         this.rows = rows;
         this.columns = columns;
@@ -32,9 +32,11 @@ public class Matrix {
             matrix.set(2, 2, 9);
 
             // 打印矩阵
+            System.out.println("调用printMatrix():");
             System.out.println("Matrix:");
             matrix.printMatrix();
             // 使用 toString 方法打印矩阵
+            System.out.println("调用toString():");
             System.out.println("Matrix:\n" + matrix);
         } catch (IllegalArgumentException e) {
             System.out.println("Exception: " + e.getMessage());

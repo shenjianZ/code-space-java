@@ -1,16 +1,16 @@
 package Graph;
 
-public class MatrixGraph<E> {
+public class WeightedMatrixGraph<E> {
     int MaxVertex;   //最大顶点数
     int vertexCount; //顶点数
     int edgeCount;   //边数
-    int[][] matrix;  //邻接矩阵
+    int[][] matrix;  //邻接矩阵 for weights
     E[] data;       //顶点对应的数据
 
     /**
      *
      */
-    public MatrixGraph() {
+    public WeightedMatrixGraph() {
         this.MaxVertex = 6;
         this.vertexCount = 0;
         this.edgeCount = 0;
@@ -18,20 +18,20 @@ public class MatrixGraph<E> {
         matrix = new int[MaxVertex][MaxVertex];
         for (int i = 0; i < MaxVertex; i++) {
             for (int j = 0; j < MaxVertex; j++) {
-                matrix[i][j] = 0;
+                matrix[i][j] = 0; // Initialize weights to 0
             }
         }
     }
 
     public static void main(String[] args) {
-        MatrixGraph<Character> graph = new MatrixGraph<>();
+        WeightedMatrixGraph<Character> graph = new WeightedMatrixGraph<Character>();
         for (int c = 'A'; c <= 'D'; ++c)
             graph.addVertex((char) c);
-        graph.addEdge(0, 1);   //A -> B
-        graph.addEdge(1, 2);   //B -> C
-        graph.addEdge(2, 3);   //C -> D
-        graph.addEdge(3, 0);   //D -> A
-        graph.addEdge(2, 0);   //C -> A
+        graph.addEdge(0, 1, 2);   //A -> B with weight 2
+        graph.addEdge(1, 2, 3);   //B -> C with weight 3
+        graph.addEdge(2, 3, 4);   //C -> D with weight 4
+        graph.addEdge(3, 0, 1);   //D -> A with weight 1
+        graph.addEdge(2, 0, 5);   //C -> A with weight 5
         graph.printGraph();
     }
 
@@ -45,12 +45,13 @@ public class MatrixGraph<E> {
     }
 
     /**
-     * @param x 起始顶点
-     * @param y 终止顶点
+     * @param x      起始顶点
+     * @param y      终止顶点
+     * @param weight 边的权值
      */
-    public void addEdge(int x, int y) {
+    public void addEdge(int x, int y, int weight) {
         if (this.matrix[x][y] == 0) {
-            this.matrix[x][y] = 1;
+            this.matrix[x][y] = weight;
             this.edgeCount++;
         }
     }
@@ -71,5 +72,4 @@ public class MatrixGraph<E> {
             System.out.println();
         }
     }
-
 }
